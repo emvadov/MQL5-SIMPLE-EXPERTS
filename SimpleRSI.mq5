@@ -6,6 +6,7 @@ input double highRSI = 70;        // HIGH RSI - SELL POINT
 input double stopLoss = 200;      // STOP LOSS POINTS
 input double takeProfit = 400;    // TAKE PROFIT POINTS
 input double lotSize = 0.01;      // TRADING LOT SIZE (1 = 100,000$)
+input int periodRSI = 14;         // RSI PERIOD - BY DEFAULT 14 CANDLES
 
 
 void OnTick()
@@ -15,14 +16,14 @@ void OnTick()
    double myRSIArray[];
    double myRSIValue;
    
-   double Ask = NormalizeDouble(SymbolInfoDouble(_Symbol, SYMBOL_ASK), _Digits);
-   double Bid = NormalizeDouble(SymbolInfoDouble(_Symbol, SYMBOL_BID), _Digits);
+   double Ask = NormalizeDouble(SymbolInfoDouble(_Symbol, SYMBOL_ASK), _Digits); // MARKET ASK PRICE
+   double Bid = NormalizeDouble(SymbolInfoDouble(_Symbol, SYMBOL_BID), _Digits); // MARKET BID PRICE
   
    
    MqlRates PriceInfo[];
    
    
-   int myRSIDef = iRSI(_Symbol, _Period, 14, PRICE_CLOSE);
+   int myRSIDef = iRSI(_Symbol, _Period, periodRSI, PRICE_CLOSE);
    
    ArraySetAsSeries(PriceInfo, true);
    ArraySetAsSeries(myRSIArray, true);
