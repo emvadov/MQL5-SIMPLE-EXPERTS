@@ -1,11 +1,11 @@
 #include <Trade\Trade.mqh>
 CTrade trade;
 
-input double lowRSI = 30;
-input double highRSI = 70;
-input double stopLoss = 200;
-input double takeProfit = 400;
-input double lotSize = 0.01;
+input double lowRSI = 30;         // LOW RSI - BUY POINT
+input double highRSI = 70;        // HIGH RSI - SELL POINT
+input double stopLoss = 200;      // STOP LOSS POINTS
+input double takeProfit = 400;    // TAKE PROFIT POINTS
+input double lotSize = 0.01;      // TRADING LOT SIZE (1 = 100,000$)
 
 
 void OnTick()
@@ -32,8 +32,7 @@ void OnTick()
    myRSIValue = NormalizeDouble(myRSIArray[0], 2);
    
    Comment("RSI Value: ", myRSIValue);
-   
-   // Check if candle is bullish
+  
    
    int PriceData = CopyRates(
    
@@ -73,7 +72,7 @@ void OnTick()
       // no positions open and rsa is high
       if((PositionsTotal() == 0) && myRSIValue > highRSI) {
       
-         trade.Sell( // SHORT TRADE
+         trade.Sell( // MARKET ORDER SHORT TRADE
          
             lotSize,                      //LOT SIZE
             NULL,                      // CURRENT SYMBOL
@@ -97,7 +96,7 @@ void OnTick()
    
       if((PositionsTotal() == 0) && (myRSIValue > 70) && (OrdersTotal() == 0)) {
       
-         trade.SellLimit(
+         trade.SellLimit( // LIMIT ORDER SHORT TRADE
          
             lotSize,                 //LOT SIZE
             (Ask + (20 * _Point)),
