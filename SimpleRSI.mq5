@@ -5,6 +5,7 @@ input double lowRSI = 30;
 input double highRSI = 70;
 input double stopLoss = 200;
 input double takeProfit = 400;
+input double lotSize = 0.01;
 
 
 void OnTick()
@@ -52,7 +53,7 @@ void OnTick()
       
          trade.Buy( // LONG TRADE
          
-            0.10,                        //LOT SIZE
+            lotSize,                        //LOT SIZE
             NULL,                        // CURRENT SYMBOL
             Ask,                         // PRICE
             Ask - stopLoss * _Point,   // STOP LOSS PRICE
@@ -74,7 +75,7 @@ void OnTick()
       
          trade.Sell( // SHORT TRADE
          
-            0.10,                      //LOT SIZE
+            lotSize,                      //LOT SIZE
             NULL,                      // CURRENT SYMBOL
             Bid,                       // PRICE
             Bid + stopLoss * _Point,   // STOP LOSS PRICE
@@ -98,7 +99,7 @@ void OnTick()
       
          trade.SellLimit(
          
-            0.10,                 //LOT SIZE
+            lotSize,                 //LOT SIZE
             (Ask + (20 * _Point)),
             _Symbol,                 // CURRENT SYMBOL
             Bid + 150 * _Point, // STOP LOSS PRICE
